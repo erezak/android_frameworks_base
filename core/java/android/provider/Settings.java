@@ -1402,6 +1402,12 @@ public final class Settings {
         public static final String SCREEN_OFF_TIMEOUT = "screen_off_timeout";
 
         /**
+         * If 0, use value from build.prop
+         * @hide
+         */
+        public static final String SCREEN_DENSITY_OVERRIDE = "screen_density_override";
+
+        /**
          * If 0, the compatibility mode is off for all applications.
          * If 1, older applications run under compatibility mode.
          * TODO: remove this settings before code freeze (bug/1907571)
@@ -2844,6 +2850,7 @@ public final class Settings {
             BLUETOOTH_DISCOVERABILITY_TIMEOUT,
             DIM_SCREEN,
             SCREEN_OFF_TIMEOUT,
+            SCREEN_DENSITY_OVERRIDE,
             SCREEN_BRIGHTNESS,
             SCREEN_BRIGHTNESS_MODE,
             SCREEN_AUTO_BRIGHTNESS_ADJ,

@@ -1488,6 +1488,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.SCREEN_OFF_TIMEOUT,
                     R.integer.def_screen_off_timeout);
 
+            loadIntegerSetting(stmt, Settings.System.SCREEN_DENSITY_OVERRIDE, R.integer.def_screen_dpi_override);
+
             // Set default cdma emergency tone
             loadSetting(stmt, Settings.System.EMERGENCY_TONE, 0);
 
