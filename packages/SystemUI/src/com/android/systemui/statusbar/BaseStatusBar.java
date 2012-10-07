@@ -976,4 +976,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         return km.inKeyguardRestrictedInputMode();
     }
+
+    protected void setStatusBarTransparency(View statusbarView) {
+        int statusBarOpacity = 100 - Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.STATUS_BAR_TRANSPARENCY_PERCENT,
+                        Settings.System.STATUS_BAR_TRANSPARENCY_PERCENT_DEFAULT);
+        statusbarView.getBackground().setAlpha(Math.round((statusBarOpacity * 255) / 100));
+
+    }
 }

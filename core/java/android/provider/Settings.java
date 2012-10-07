@@ -2524,6 +2524,19 @@ public final class Settings {
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
 
         /**
+         * Transparency value for status bar.
+         * 100 = Fully transparent
+         * 0 = Fully opaque
+         * @hide
+         */
+        public static final String STATUS_BAR_TRANSPARENCY_PERCENT = "status_bar_transparency_percent";
+
+        /**
+         * @hide
+         */
+        public static final int STATUS_BAR_TRANSPARENCY_PERCENT_DEFAULT = 25;
+
+        /**
          * Whether to show the IME switcher in the status bar
          * @hide
          */

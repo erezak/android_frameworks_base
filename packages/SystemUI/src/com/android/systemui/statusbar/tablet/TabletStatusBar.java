@@ -32,11 +32,13 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.CustomTheme;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.inputmethodservice.InputMethodService;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
@@ -249,7 +251,12 @@ public class TabletStatusBar extends BaseStatusBar implements
                 // We use a pixel format of RGB565 for the status bar to save memory bandwidth and
                 // to ensure that the layer can be handled by HWComposer.  On some devices the
                 // HWComposer is unable to handle SW-rendered RGBX_8888 layers.
-                PixelFormat.RGB_565);
+                PixelFormat.TRANSLUCENT);
+
+        // this will allow the navbar to run in an overlay on devices that support this
+        if (ActivityManager.isHighEndGfx(mDisplay)) {
+            lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
+        }
 
         // We explicitly leave FLAG_HARDWARE_ACCELERATED out of the flags.  The status bar occupies
         // very little screen real-estate and is updated fairly frequently.  By using CPU rendering
@@ -262,6 +269,8 @@ public class TabletStatusBar extends BaseStatusBar implements
         WindowManagerImpl.getDefault().addView(sb, lp);
     }
 
+    private Handler mConfigHandler;
+
     // last theme that was applied in order to detect theme change (as opposed
     // to some other configuration change).
     CustomTheme mCurrentTheme;
@@ -271,6 +280,10 @@ public class TabletStatusBar extends BaseStatusBar implements
     protected void addPanelWindows() {
         final Context context = mContext;
         final Resources res = mContext.getResources();
+        
+        mConfigHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mConfigHandler);
+        settingsObserver.observe();
 
         // Notification Panel
         mNotificationPanel = (NotificationPanel)View.inflate(context,
@@ -1770,6 +1783,25 @@ public class TabletStatusBar extends BaseStatusBar implements
     protected boolean shouldDisableNavbarGestures() {
         return mNotificationPanel.getVisibility() == View.VISIBLE
                 || (mDisabled & StatusBarManager.DISABLE_HOME) != 0;
+    }
+    
+    private final class SettingsObserver extends ContentObserver {
+    	SettingsObserver(Handler handler) {
+    		super(handler);
+    	}
+
+    	void observe() {
+    		ContentResolver resolver = mContext.getContentResolver();
+    		resolver.registerContentObserver(Settings.System.getUriFor(
+    				Settings.System.STATUS_BAR_TRANSPARENCY_PERCENT), false, this);
+    	}
+    	
+    	@Override
+    	public void onChange(boolean selfChange) {
+    		setStatusBarTransparency(mStatusBarView);
+    		loadDimens();
+    		recreateStatusBar();
+    	}
     }
 }
 
