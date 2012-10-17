@@ -1013,8 +1013,12 @@ public class TabletStatusBar extends BaseStatusBar implements
             cclock.updateClockVisibility(show);
         }
         else{
-            clock.updateClockVisibility(false);
-            cclock.updateClockVisibility(false);
+        	if (clock != null) {
+                clock.updateClockVisibility(false);
+        	}
+        	if (cclock != null) {
+                cclock.updateClockVisibility(false);
+        	}
         }
         if (network_text != null) {
             network_text.setVisibility((!show) ? View.VISIBLE : View.GONE);

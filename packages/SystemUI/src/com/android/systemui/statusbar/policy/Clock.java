@@ -77,6 +77,7 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
     public static final int CLOCK_STYLE_CENTER   = 2;
 
     protected int mClockStyle;
+    protected boolean mForceTabletUi;
 
     Handler mHandler;
 
@@ -269,11 +270,13 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
             }
         }
         mClockStyle = (Settings.System.getInt(resolver,Settings.System.STATUS_BAR_CLOCK_STYLE, 1));
+        mForceTabletUi = (Settings.System.getInt(resolver,Settings.System.FORCE_TABLET_UI, 0) == 1);
         updateClockVisibility(true);
     }
 
     public void updateClockVisibility(boolean show) {
-        if (mClockStyle == CLOCK_STYLE_RIGHT)
+        if (mClockStyle == CLOCK_STYLE_RIGHT || (
+        		mClockStyle == CLOCK_STYLE_CENTER && mForceTabletUi))
             setVisibility(show ? View.VISIBLE : View.GONE);
         else
             setVisibility(View.GONE);

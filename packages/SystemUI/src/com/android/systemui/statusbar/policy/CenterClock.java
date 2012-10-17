@@ -53,7 +53,8 @@ public class CenterClock extends Clock {
     public void updateClockVisibility(boolean show) {
         ContentResolver resolver = mContext.getContentResolver();
         mClockStyle = (Settings.System.getInt(resolver,Settings.System.STATUS_BAR_CLOCK_STYLE, 1));
-        if (mClockStyle == CLOCK_STYLE_CENTER)
+        mForceTabletUi = (Settings.System.getInt(resolver,Settings.System.FORCE_TABLET_UI, 0) == 1);
+        if (mClockStyle == CLOCK_STYLE_CENTER && !mForceTabletUi)
             setVisibility(show ? View.VISIBLE : View.GONE);
         else
             setVisibility(View.GONE);

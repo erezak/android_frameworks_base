@@ -2403,6 +2403,8 @@ public final class Settings {
          * @hide
          */
         public static final String NAVBAR_LEFT = "navigation_bar_left";
+
+        /**
          * Navigation Bar show switch
          *
          * @hide
@@ -2522,6 +2524,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
+
+
+        /**
+        * Force Tablet UI Toggle
+        * @hide
+        */
+        public static final String FORCE_TABLET_UI = "force_tablet_ui";
 
         /**
          * Transparency value for status bar.
