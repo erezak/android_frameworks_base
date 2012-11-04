@@ -1798,6 +1798,9 @@ public class TabletStatusBar extends BaseStatusBar implements
     		ContentResolver resolver = mContext.getContentResolver();
     		resolver.registerContentObserver(Settings.System.getUriFor(
     				Settings.System.STATUS_BAR_TRANSPARENCY_PERCENT), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_AM_PM), false, this);
+
     	}
     	
     	@Override

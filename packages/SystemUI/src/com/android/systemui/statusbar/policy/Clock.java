@@ -92,6 +92,8 @@ public class Clock extends TextView implements OnClickListener, OnLongClickListe
                     Settings.System.STATUS_BAR_AM_PM), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_STYLE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.FORCE_TABLET_UI), false, this);
         }
 
         @Override public void onChange(boolean selfChange) {

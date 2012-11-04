@@ -308,6 +308,8 @@ public class PhoneStatusBar extends BaseStatusBar {
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_TRANSPARENCY_PERCENT), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_AM_PM), false, this);
             update();
         }
 
